@@ -19,6 +19,10 @@ main(void)
 			case KEY_F(1):
 				printw("Pressed the F1 key");
 				break;
+			case 'q':
+				printw("Quitting so early?");
+				done = 1;
+				break;
 			default:
 				printw("The pressed key is ");
 				attron(A_BOLD);
@@ -29,6 +33,5 @@ main(void)
 		refresh();
 	}
 
-	getch();
 	endwin();
 }
