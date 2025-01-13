@@ -30,7 +30,7 @@ draw_statusbar(char *status_text)
 
 	/* Draw Statusbar */
 	attron(COLOR_PAIR(1));
-	mvprintw(LINES-1, 0, " NORMAL ");
+	mvprintw(LINES-1, 0, status_text);
 	for(x = 0; x < COLS-status_text_len; x++) {
 		printw(" ");
 	}
