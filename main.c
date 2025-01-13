@@ -128,7 +128,7 @@ main(void)
 
 		/* Statusbar */
 		gettimestamp(timestr, timestr_maxlen);
-		draw_div_statusbar(" NORMAL ", "I am centered", timestr);
+		draw_div_statusbar(" NORMAL ", NULL, timestr);
 
 		/* Infobar */
 		draw_div_statusbar_at(TOP, " edm-lighthouse", "DASHBOARD", "v100 ");
