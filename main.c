@@ -113,6 +113,59 @@ gettimestamp(char *out, size_t maxn)
 	strftime(out, maxn, "%l:%M:%S %p", localtime(&now));
 }
 
+struct menuopt {
+	char *letters;
+	char *name;
+	char *expl;
+	void (*callback)(void);
+};
+#define MENUOPT(_letters, _name, _expl, _callback) (struct menuopt) { .letters = _letters, .name = _name, .expl = _expl, .callback = _callback }
+
+void
+draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
+{
+	size_t x;
+
+	size_t 	menuh,
+			menuw,
+			lstart,
+			hstart
+			;
+
+	size_t 	titlepad,
+			entrypad,
+			entrylen
+			;
+
+	const size_t max_entrylen=32;
+	char entry[max_entrylen];
+
+	const size_t enheight=2;
+	menuh = 1 + enheight*numopts; /* 2 lines per entry + title */
+	menuw = strlen(title); /* Default title width */
+
+	/* Process opts */
+	for(x = 0; x < numopts; x++) {
+		/* Update menu by opt max width */
+		if(menuw < strlen(menuopts[x].expl)) {
+			menuw = strlen(menuopts[x].expl);
+		}
+	}
+	lstart = (COLS-menuw)/2;
+	hstart = (LINES-menuh)/2;
+
+	/* Calculate entry divs */
+	titlepad = (menuw - strlen(title))/2;
+
+	/* Draw opts */
+	mvprintw(hstart, lstart+titlepad, title);
+	for(x = 0; x < numopts; x++) {
+		entrylen = snprintf(entry, max_entrylen, "[%s] - %s", menuopts[x].letters, menuopts[x].expl);
+		entrypad = (menuw-entrylen)/2;
+		mvprintw(hstart+(x+1)*enheight, lstart+entrypad, entry);
+	}
+}
+
 main(void)
 {
 	int ch;
