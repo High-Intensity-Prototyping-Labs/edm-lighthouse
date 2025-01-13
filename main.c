@@ -218,8 +218,8 @@ edit_menu(void)
 
 	static const char *title = "Edit Instance...";
 	static struct menuopt mmopts[] = {
-		MENUOPT("lL", "Lua helpers", "Edit instance Lua helpers (in /lua/..)", edit_lua, NULL),
-		MENUOPT("a", "JSON activities", "Edit JSON activities (in /activities/..)", edit_json, NULL),
+		MENUOPT("hlL", "Lua helpers", "Edit instance Lua helpers (in /lua/..)", edit_lua, NULL),
+		MENUOPT("jaA", "JSON activities", "Edit JSON activities (in /activities/..)", edit_json, NULL),
 		MENUOPT("q", "Back", "Go back to the previous menu", edit_return, NULL),
 	};
 	static size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
