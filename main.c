@@ -1,14 +1,23 @@
 #include <ncurses.h>
 
-main(void)
+void
+setup(void)
 {
-	int ch;
-	int done;
 
 	initscr();
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();
+
+}
+
+main(void)
+{
+	int ch;
+	int done;
+
+	/* Setup ncurses */
+	setup();
 
 	done = 0;
 	while(!done) {
