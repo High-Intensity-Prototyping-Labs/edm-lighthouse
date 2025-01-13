@@ -3,6 +3,9 @@
 #include <time.h>
 #include <unistd.h>
 
+/* Global Variables */
+static int done = 0;
+
 void
 setup(void)
 {
@@ -122,8 +125,14 @@ struct menuopt {
 };
 #define MENUOPT(_letters, _name, _expl, _callback, _args) (struct menuopt) { .letters = _letters, .name = _name, .expl = _expl, .callback = _callback, .args = _args }
 
+struct menu {
+	const char *title;
+	struct menuopt *mmopts;
+	size_t numopts;
+};
+
 void
-draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
+draw_menu(const struct menu *m)
 {
 	size_t x;
 
@@ -142,26 +151,26 @@ draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
 	char entry[max_entrylen];
 
 	const size_t enheight=2;
-	menuh = 1 + enheight*numopts; /* 2 lines per entry + title */
-	menuw = strlen(title); /* Default title width */
+	menuh = 1 + enheight*m->numopts; /* 2 lines per entry + title */
+	menuw = strlen(m->title); /* Default title width */
 
 	/* Process opts */
-	for(x = 0; x < numopts; x++) {
+	for(x = 0; x < m->numopts; x++) {
 		/* Update menu by opt max width */
-		if(menuw < strlen(menuopts[x].expl)) {
-			menuw = strlen(menuopts[x].expl);
+		if(menuw < strlen(m->mmopts[x].expl)) {
+			menuw = strlen(m->mmopts[x].expl);
 		}
 	}
 	lstart = (COLS-menuw)/2;
 	hstart = (LINES-menuh)/2;
 
 	/* Calculate entry divs */
-	titlepad = (menuw - strlen(title))/2;
+	titlepad = (menuw - strlen(m->title))/2;
 
 	/* Draw opts */
-	mvprintw(hstart, lstart+titlepad, title);
-	for(x = 0; x < numopts; x++) {
-		entrylen = snprintf(entry, max_entrylen, "[%s] %s - %s", menuopts[x].letters, menuopts[x].name, menuopts[x].expl);
+	mvprintw(hstart, lstart+titlepad, m->title);
+	for(x = 0; x < m->numopts; x++) {
+		entrylen = snprintf(entry, max_entrylen, "[%s] %s - %s", m->mmopts[x].letters, m->mmopts[x].name, m->mmopts[x].expl);
 		entrypad = (menuw-entrylen)/2;
 		mvprintw(hstart+(x+1)*enheight, lstart+entrypad, entry);
 	}
@@ -171,28 +180,50 @@ void
 menu_edit(void* args)
 {
 	(void)args;
+	clear();
 	mvprintw(2,0,"Seem like you tried to open the edit menu!");
 }
 
 void
 menu_quit(void* args)
 {
-	*((int*)args) = 1;
+	done = 1;
 }
+
+const struct menu *
+main_menu(void)
+{
+	static struct menu m;
+
+	static const char *title = "Main Menu";
+	static struct menuopt mmopts[] = {
+		MENUOPT("eE", "Edit", "Edit edm instance", menu_edit, NULL),
+		MENUOPT("q", "Quit", "Quit the edm-lighthouse", menu_quit, NULL)
+	};
+	static const size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
+
+	m.title = title;
+	m.mmopts = &mmopts;
+	m.numopts = numopts;
+
+	return &m;
+}
+
 
 main(void)
 {
 	int ch;
-	int done;
 	size_t x, xx;
 
 	const size_t timestr_maxlen = 32;
 	char timestr[timestr_maxlen];
 
+	const struct menu *MENU = main_menu();
+
 	/* Setup ncurses */
 	setup();
 
-	done = 0;
+	done = 0; /* global */
 	while(!done) {
 
 		/* Statusbar */
@@ -203,23 +234,14 @@ main(void)
 		draw_div_statusbar_at(TOP, " edm-lighthouse", NULL, "v100 ");
 
 		/* Main Menu */
-		struct menuopt mmopts[] = {
-			MENUOPT("eE", "Edit", "Edit edm instance", menu_edit, NULL),
-			MENUOPT("q", "Quit", "Quit the edm-lighthouse", menu_quit, &done)
-		};
-		const size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
-		draw_menu(
-			"Main Menu",
-			&mmopts,
-			numopts
-		);
+		draw_menu(main_menu());
 
 		/* User interaction */
 		ch = getch();
-		for(x = 0; x < numopts; x++) {
-			for(xx = 0; xx < strlen(mmopts[x].letters); xx++) {
-				if(ch == mmopts[x].letters[xx]) {
-					mmopts[x].callback(mmopts[x].args);
+		for(x = 0; x < MENU->numopts; x++) {
+			for(xx = 0; xx < strlen(MENU->mmopts[x].letters); xx++) {
+				if(ch == MENU->mmopts[x].letters[xx]) {
+					MENU->mmopts[x].callback(MENU->mmopts[x].args);
 				}
 			}
 		}
@@ -230,5 +252,4 @@ main(void)
 		/* Time delay */
 		usleep(333);
 	}
-
 }
