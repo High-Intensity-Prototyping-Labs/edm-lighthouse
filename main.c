@@ -177,10 +177,7 @@ menu_edit(void* args)
 void
 menu_quit(void* args)
 {
-	int *done_ptr = (int*)args;
-
-	mvprintw(2,0,"Seems like you're trying to quit");
-	*done_ptr = 1;
+	*((int*)args) = 1;
 }
 
 main(void)
