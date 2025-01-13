@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 /* Global Variables */
 static int done = 0;
@@ -190,13 +191,17 @@ set_activemenu(const struct menu *m)
 void
 edit_lua(void*args)
 {
-	mvprintw(2, 0, "Seems like you're trying to edit Lua");
+	system("vi lua");
+	clear();
+	refresh();
 }
 
 void
 edit_json(void*args)
 {
-	mvprintw(2, 0, "Seems like you're trying to edit JSON");
+	system("vi activities");
+	clear();
+	refresh();
 }
 
 void
