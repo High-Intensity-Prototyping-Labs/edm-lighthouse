@@ -12,6 +12,7 @@ setup(void)
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();
+	timeout(0); /* Non-blocking reads */
 
 	/* Colours */
 	if(has_colors()) {
