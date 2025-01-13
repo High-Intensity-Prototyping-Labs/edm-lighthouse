@@ -26,28 +26,10 @@ main(void)
 	/* Setup ncurses */
 	setup();
 
-	done = 0;
-	while(!done) {
-		printw("Type any character to see it in bold\n");
-		ch = getch();
+	/* Draw Statusbar */
+	attron(COLOR_PAIR(1));
+	mvprintw(LINES-1, 0, " NORMAL ");
+	attroff(COLOR_PAIR(1));
 
-		switch(ch) {
-			case KEY_F(1):
-				printw("Pressed the F1 key");
-				break;
-			case 'q':
-				printw("Quitting so early?");
-				done = 1;
-				break;
-			default:
-				printw("The pressed key is ");
-				attron(A_BOLD);
-				printw("%c", ch);
-				attroff(A_BOLD);
-		}
-
-		refresh();
-	}
-
-	endwin();
+	refresh();
 }
