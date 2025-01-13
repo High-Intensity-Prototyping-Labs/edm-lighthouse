@@ -20,14 +20,12 @@ setup(void)
 }
 
 void
-draw_statusbar(void)
+draw_statusbar(char *status_text)
 {
 	int x;
-	const char *status_text;
 	size_t status_text_len;
 
 	/* Setup statusbar vars */
-	status_text = " NORMAL ";
 	status_text_len = strlen(status_text);
 
 	/* Draw Statusbar */
@@ -49,7 +47,7 @@ main(void)
 	setup();
 
 	/* Statusbar */
-	draw_statusbar();
+	draw_statusbar(" NORMAL ");
 
 	refresh();
 }
