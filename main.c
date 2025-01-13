@@ -94,7 +94,7 @@ draw_div_statusbar_at(enum placement where, char *div1, char *div2, char *div3)
 		memcpy(&status_text[2*div_len + leftpad], div3, div3_len);
 
 		/* Draw status bar */
-		draw_statusbar(status_text);
+		draw_statusbar_at(where, status_text);
 }
 
 void
