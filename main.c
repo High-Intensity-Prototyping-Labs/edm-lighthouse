@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 void
 setup(void)
@@ -100,9 +101,18 @@ main(void)
 	/* Setup ncurses */
 	setup();
 
-	/* Statusbar */
-	gettimestamp(timestr, timestr_maxlen);
-	draw_div_statusbar(" NORMAL ", "I am centered", timestr);
+	done = 0;
+	while(!done) {
 
-	refresh();
+		/* Statusbar */
+		gettimestamp(timestr, timestr_maxlen);
+		draw_div_statusbar(" NORMAL ", "I am centered", timestr);
+
+		/* Refresh window */
+		refresh();
+
+		/* Time delay */
+		sleep(1);
+	}
+
 }
