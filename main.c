@@ -130,6 +130,9 @@ main(void)
 		gettimestamp(timestr, timestr_maxlen);
 		draw_div_statusbar(" NORMAL ", "I am centered", timestr);
 
+		/* Infobar */
+		draw_div_statusbar_at(TOP, " edm-lighthouse", "DASHBOARD", "v100 ");
+
 		/* Refresh window */
 		refresh();
 
