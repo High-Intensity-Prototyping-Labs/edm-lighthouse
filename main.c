@@ -191,7 +191,7 @@ set_activemenu(const struct menu *m)
 void
 edit_lua(void*args)
 {
-	system("vi lua");
+	system("cd lua && vi .");
 	clear();
 	refresh();
 }
@@ -199,7 +199,7 @@ edit_lua(void*args)
 void
 edit_json(void*args)
 {
-	system("vi activities");
+	system("cd activities && vi .");
 	clear();
 	refresh();
 }
