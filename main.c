@@ -117,9 +117,10 @@ struct menuopt {
 	char *letters;
 	char *name;
 	char *expl;
-	void (*callback)(void);
+	void (*callback)(void*);
+	void *args;
 };
-#define MENUOPT(_letters, _name, _expl, _callback) (struct menuopt) { .letters = _letters, .name = _name, .expl = _expl, .callback = _callback }
+#define MENUOPT(_letters, _name, _expl, _callback, _args) (struct menuopt) { .letters = _letters, .name = _name, .expl = _expl, .callback = _callback, .args = _args }
 
 void
 draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
@@ -167,13 +168,14 @@ draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
 }
 
 void
-menu_edit(void)
+menu_edit(void* args)
 {
+	(void)args;
 	mvprintw(2,0,"Seem like you tried to open the edit menu!");
 }
 
 void
-menu_quit(void)
+menu_quit(void* args)
 {
 	mvprintw(2,0,"Seems like you're trying to quit");
 }
@@ -202,8 +204,8 @@ main(void)
 
 		/* Main Menu */
 		struct menuopt mmopts[] = {
-			MENUOPT("eE", "Edit", "Edit edm instance", menu_edit),
-			MENUOPT("q", "Quit", "Quit the edm-lighthouse", menu_quit)
+			MENUOPT("eE", "Edit", "Edit edm instance", menu_edit, NULL),
+			MENUOPT("q", "Quit", "Quit the edm-lighthouse", menu_quit, &done)
 		};
 		const size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
 		draw_menu(
@@ -217,7 +219,7 @@ main(void)
 		for(x = 0; x < numopts; x++) {
 			for(xx = 0; xx < strlen(mmopts[x].letters); xx++) {
 				if(ch == mmopts[x].letters[xx]) {
-					mmopts[x].callback();
+					mmopts[x].callback(mmopts[x].args);
 				}
 			}
 		}
