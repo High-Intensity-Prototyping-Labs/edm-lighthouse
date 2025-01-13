@@ -5,6 +5,7 @@
 
 /* Global Variables */
 static int done = 0;
+static const struct menu *MENU = NULL;
 
 void
 setup(void)
@@ -238,7 +239,7 @@ main(void)
 	const size_t timestr_maxlen = 32;
 	char timestr[timestr_maxlen];
 
-	const struct menu *MENU = main_menu();
+	MENU = main_menu();
 
 	/* Setup ncurses */
 	setup();
