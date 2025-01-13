@@ -182,6 +182,7 @@ main(void)
 {
 	int ch;
 	int done;
+	size_t x, xx;
 
 	const size_t timestr_maxlen = 32;
 	char timestr[timestr_maxlen];
@@ -199,13 +200,6 @@ main(void)
 		/* Infobar */
 		draw_div_statusbar_at(TOP, " edm-lighthouse", NULL, "v100 ");
 
-		/* User interaction */
-		ch = getch();
-		if(ch == 'q') {
-			done = 1;
-			continue;
-		}
-
 		/* Main Menu */
 		struct menuopt mmopts[] = {
 			MENUOPT("eE", "Edit", "Edit edm instance", menu_edit),
@@ -217,6 +211,16 @@ main(void)
 			&mmopts,
 			numopts
 		);
+
+		/* User interaction */
+		ch = getch();
+		for(x = 0; x < numopts; x++) {
+			for(xx = 0; xx < strlen(mmopts[x].letters); xx++) {
+				if(ch == mmopts[x].letters[xx]) {
+					mmopts[x].callback();
+				}
+			}
+		}
 
 		/* Refresh window */
 		refresh();
