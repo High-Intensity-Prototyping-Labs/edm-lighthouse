@@ -231,7 +231,7 @@ main(void)
 		refresh();
 
 		/* Time delay */
-		sleep(1);
+		usleep(333);
 	}
 
 }
