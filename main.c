@@ -160,7 +160,7 @@ draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
 	/* Draw opts */
 	mvprintw(hstart, lstart+titlepad, title);
 	for(x = 0; x < numopts; x++) {
-		entrylen = snprintf(entry, max_entrylen, "[%s] - %s", menuopts[x].letters, menuopts[x].expl);
+		entrylen = snprintf(entry, max_entrylen, "[%s] %s - %s", menuopts[x].letters, menuopts[x].name, menuopts[x].expl);
 		entrypad = (menuw-entrylen)/2;
 		mvprintw(hstart+(x+1)*enheight, lstart+entrypad, entry);
 	}
