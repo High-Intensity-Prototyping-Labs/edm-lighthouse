@@ -75,6 +75,15 @@ draw_div_statusbar(char *div1, char *div2, char *div3)
 	draw_statusbar(status_text);
 }
 
+void
+gettimestamp(char *out, size_t maxn)
+{
+	time_t now;
+
+	now = time(NULL);
+	strftime(out, maxn, "%l:%M:%S %p", localtime(&now));
+}
+
 main(void)
 {
 	int ch;
