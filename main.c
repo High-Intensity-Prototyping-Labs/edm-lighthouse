@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <string.h>
+#include <time.h>
 
 void
 setup(void)
@@ -78,12 +79,19 @@ main(void)
 {
 	int ch;
 	int done;
+	time_t now;
+	char *timestr;
 
 	/* Setup ncurses */
 	setup();
 
 	/* Statusbar */
-	draw_div_statusbar(" NORMAL ", NULL, NULL);
+	now = time(NULL);
+	timestr = ctime(&now);
+	if(timestr[strlen(timestr)-1] == '\n') {
+		timestr[strlen(timestr)-1] = '\0';
+	}
+	draw_div_statusbar(" NORMAL ", NULL, timestr);
 
 	refresh();
 }
