@@ -18,10 +18,10 @@ setup(void)
 		start_color();
 		init_pair(1, COLOR_BLACK, COLOR_WHITE);
 	}
-
 }
 
-enum placement {
+enum placement
+{
 	TOP,
 	BOTTOM,
 };
