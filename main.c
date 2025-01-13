@@ -166,6 +166,18 @@ draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
 	}
 }
 
+void
+menu_edit(void)
+{
+	mvprintw(2,0,"Seem like you tried to open the edit menu!");
+}
+
+void
+menu_quit(void)
+{
+	mvprintw(2,0,"Seems like you're trying to quit");
+}
+
 main(void)
 {
 	int ch;
@@ -196,8 +208,8 @@ main(void)
 
 		/* Main Menu */
 		struct menuopt mmopts[] = {
-			MENUOPT("eE", "Edit", "Edit edm instance", NULL),
-			MENUOPT("q", "Quit", "Quit the edm-lighthouse", NULL)
+			MENUOPT("eE", "Edit", "Edit edm instance", menu_edit),
+			MENUOPT("q", "Quit", "Quit the edm-lighthouse", menu_quit)
 		};
 		const size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
 		draw_menu(
