@@ -128,10 +128,11 @@ main(void)
 
 		/* Statusbar */
 		gettimestamp(timestr, timestr_maxlen);
-		draw_div_statusbar(" NORMAL ", NULL, timestr);
+		draw_div_statusbar(NULL, NULL, timestr);
 
 		/* Infobar */
-		draw_div_statusbar_at(TOP, " edm-lighthouse", "DASHBOARD", "v100 ");
+		draw_div_statusbar_at(TOP, " edm-lighthouse", NULL, "v100 ");
+
 
 		/* Refresh window */
 		refresh();
