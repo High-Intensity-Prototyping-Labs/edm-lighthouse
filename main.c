@@ -137,7 +137,7 @@ draw_menu(const char *title, struct menuopt *menuopts, size_t numopts)
 			entrylen
 			;
 
-	const size_t max_entrylen=32;
+	const size_t max_entrylen=64;
 	char entry[max_entrylen];
 
 	const size_t enheight=2;
