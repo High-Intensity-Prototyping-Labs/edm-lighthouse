@@ -7,6 +7,10 @@
 static int done = 0;
 static const struct menu *MENU = NULL;
 
+/* Forward Decs */
+const struct menu *edit_menu(void);
+const struct menu *main_menu(void);
+
 void
 setup(void)
 {
@@ -183,6 +187,25 @@ set_activemenu(const struct menu *m)
 	MENU = m;
 }
 
+void
+edit_lua(void*args)
+{
+	mvprintw(2, 0, "Seems like you're trying to edit Lua");
+}
+
+void
+edit_json(void*args)
+{
+	mvprintw(2, 0, "Seems like you're trying to edit JSON");
+}
+
+void
+edit_return(void*args)
+{
+	clear();
+	set_activemenu(main_menu());
+}
+
 const struct menu *
 edit_menu(void)
 {
@@ -190,9 +213,9 @@ edit_menu(void)
 
 	static const char *title = "Edit Instance...";
 	static struct menuopt mmopts[] = {
-		MENUOPT("lL", "Lua helpers", "Edit instance Lua helpers (in /lua/..)", NULL, NULL),
-		MENUOPT("a", "JSON activities", "Edit JSON activities (in /activities/..)", NULL, NULL),
-		MENUOPT("q", "Back", "Go back to the previous menu", NULL, NULL),
+		MENUOPT("lL", "Lua helpers", "Edit instance Lua helpers (in /lua/..)", edit_lua, NULL),
+		MENUOPT("a", "JSON activities", "Edit JSON activities (in /activities/..)", edit_json, NULL),
+		MENUOPT("q", "Back", "Go back to the previous menu", edit_return, NULL),
 	};
 	static size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
 
