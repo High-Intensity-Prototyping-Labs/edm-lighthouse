@@ -102,7 +102,7 @@ main(void)
 
 	/* Statusbar */
 	gettimestamp(timestr, timestr_maxlen);
-	draw_div_statusbar(" NORMAL ", NULL, timestr);
+	draw_div_statusbar(" NORMAL ", "I am centered", timestr);
 
 	refresh();
 }
