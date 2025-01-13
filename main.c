@@ -88,18 +88,15 @@ main(void)
 {
 	int ch;
 	int done;
-	time_t now;
-	char *timestr;
+
+	const size_t timestr_maxlen = 32;
+	char timestr[timestr_maxlen];
 
 	/* Setup ncurses */
 	setup();
 
 	/* Statusbar */
-	now = time(NULL);
-	timestr = ctime(&now);
-	if(timestr[strlen(timestr)-1] == '\n') {
-		timestr[strlen(timestr)-1] = '\0';
-	}
+	gettimestamp(timestr, timestr_maxlen);
 	draw_div_statusbar(" NORMAL ", NULL, timestr);
 
 	refresh();
