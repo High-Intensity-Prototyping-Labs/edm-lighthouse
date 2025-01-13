@@ -194,6 +194,18 @@ main(void)
 			continue;
 		}
 
+		/* Main Menu */
+		struct menuopt mmopts[] = {
+			MENUOPT("eE", "Edit", "Edit edm instance", NULL),
+			MENUOPT("q", "Quit", "Quit the edm-lighthouse", NULL)
+		};
+		const size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
+		draw_menu(
+			"Main Menu",
+			&mmopts,
+			numopts
+		);
+
 		/* Refresh window */
 		refresh();
 
