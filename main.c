@@ -83,7 +83,7 @@ main(void)
 	setup();
 
 	/* Statusbar */
-	draw_statusbar(" NORMAL ");
+	draw_div_statusbar(" NORMAL ", NULL, NULL);
 
 	refresh();
 }
