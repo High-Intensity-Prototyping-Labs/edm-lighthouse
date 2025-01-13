@@ -254,7 +254,7 @@ main(void)
 		draw_div_statusbar_at(TOP, " edm-lighthouse", NULL, "v100 ");
 
 		/* Main Menu */
-		draw_menu(main_menu());
+		draw_menu(MENU);
 
 		/* User interaction */
 		ch = getch();
