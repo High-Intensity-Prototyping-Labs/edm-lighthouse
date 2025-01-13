@@ -133,6 +133,12 @@ main(void)
 		/* Infobar */
 		draw_div_statusbar_at(TOP, " edm-lighthouse", NULL, "v100 ");
 
+		/* User interaction */
+		ch = getch();
+		if(ch == 'q') {
+			done = 1;
+			continue;
+		}
 
 		/* Refresh window */
 		refresh();
