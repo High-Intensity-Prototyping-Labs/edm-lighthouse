@@ -178,11 +178,36 @@ draw_menu(const struct menu *m)
 }
 
 void
+set_activemenu(const struct menu *m)
+{
+	MENU = m;
+}
+
+const struct menu *
+edit_menu(void)
+{
+	static struct menu m;
+
+	static const char *title = "Edit Instance...";
+	static struct menuopt mmopts[] = {
+		MENUOPT("lL", "Lua helpers", "Edit instance Lua helpers (in /lua/..)", NULL, NULL),
+		MENUOPT("a", "JSON activities", "Edit JSON activities (in /activities/..)", NULL, NULL),
+		MENUOPT("q", "Back", "Go back to the previous menu", NULL, NULL),
+	};
+	static size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
+
+	m.title = title;
+	m.mmopts = &mmopts;
+	m.numopts = numopts;
+
+	return &m;
+}
+
+void
 menu_edit(void* args)
 {
-	(void)args;
 	clear();
-	mvprintw(2,0,"Seem like you tried to open the edit menu!");
+	set_activemenu(edit_menu());
 }
 
 void
@@ -209,27 +234,6 @@ main_menu(void)
 
 	return &m;
 }
-
-const struct menu *
-edit_menu(void)
-{
-	static struct menu m;
-
-	static const char *title = "Edit Instance...";
-	static struct menuopt mmopts[] = {
-		MENUOPT("lL", "Lua helpers", "Edit instance Lua helpers (in /lua/..)", NULL, NULL),
-		MENUOPT("a", "JSON activities", "Edit JSON activities (in /activities/..)", NULL, NULL),
-		MENUOPT("q", "Back", "Go back to the previous menu", NULL, NULL),
-	};
-	static size_t numopts = sizeof(mmopts) / sizeof(struct menuopt);
-
-	m.title = title;
-	m.mmopts = &mmopts;
-	m.numopts = numopts;
-
-	return &m;
-}
-
 
 main(void)
 {
