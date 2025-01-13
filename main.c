@@ -21,23 +21,40 @@ setup(void)
 
 }
 
+enum placement {
+	TOP,
+	BOTTOM,
+};
+
 void
-draw_statusbar(char *status_text)
+draw_statusbar_at(enum placement where, char *status_text)
 {
-	int x;
+
+	int x, height;
 	size_t status_text_len;
 
 	/* Setup statusbar vars */
 	status_text_len = strlen(status_text);
 
+	if(where == TOP) {
+		height = 1;
+	} else {
+		height = LINES-1;
+	}
+
 	/* Draw Statusbar */
 	attron(COLOR_PAIR(1));
-	mvprintw(LINES-1, 0, status_text);
+	mvprintw(height, 0, status_text);
 	for(x = 0; x < COLS-status_text_len; x++) {
 		printw(" ");
 	}
 	attroff(COLOR_PAIR(1));
+}
 
+void
+draw_statusbar(char *status_text)
+{
+	draw_statusbar_at(BOTTOM, status_text);
 }
 
 void
